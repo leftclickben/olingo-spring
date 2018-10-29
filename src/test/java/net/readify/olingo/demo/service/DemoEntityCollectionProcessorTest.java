@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -59,7 +59,7 @@ public class DemoEntityCollectionProcessorTest {
     }
 
     private String readFile(URL url) throws IOException {
-        return readFile(new FileInputStream(new File(URLDecoder.decode(Objects.requireNonNull(url).getFile(), Charset.forName("UTF-8")))));
+        return readFile(new FileInputStream(new File(URLDecoder.decode(Objects.requireNonNull(url).getFile(), StandardCharsets.UTF_8))));
     }
 
     private String readFile(InputStream in) {
