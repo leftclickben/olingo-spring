@@ -15,7 +15,7 @@ To start the API locally using a bootable JAR:
 gradle bootRun
 ```
 
-This will launch the API at [http://localhost:8080/](http://localhost:8080/).
+This will launch the API at [http://localhost:8080/odata/](http://localhost:8080/odata/).
 
 ## Running the tests
 
