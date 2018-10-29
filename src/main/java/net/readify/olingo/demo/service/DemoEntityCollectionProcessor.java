@@ -60,34 +60,34 @@ public class DemoEntityCollectionProcessor implements EntityCollectionProcessor 
         response.setHeader(HttpHeader.CONTENT_TYPE, responseFormat.toContentTypeString());
     }
 
-    private EntityCollection getData(EdmEntitySet edmEntitySet){
+    private EntityCollection getData(EdmEntitySet edmEntitySet) {
         EntityCollection productsCollection = new EntityCollection();
         // check for which EdmEntitySet the data is requested
-        if(DemoEdmProvider.ES_PRODUCTS_NAME.equals(edmEntitySet.getName())) {
+        if (DemoEdmProvider.PRODUCTS_SET_NAME.equals(edmEntitySet.getName())) {
             List<Entity> productList = productsCollection.getEntities();
 
             // add some sample product entities
             final Entity e1 = new Entity()
-                    .addProperty(new Property(null, "ID", ValueType.PRIMITIVE, 1))
-                    .addProperty(new Property(null, "Name", ValueType.PRIMITIVE, "Notebook Basic 15"))
-                    .addProperty(new Property(null, "Description", ValueType.PRIMITIVE,
-                            "Notebook Basic, 1.7GHz - 15 XGA - 1024MB DDR2 SDRAM - 40GB"));
+                .addProperty(new Property(null, "ID", ValueType.PRIMITIVE, 1))
+                .addProperty(new Property(null, "Name", ValueType.PRIMITIVE, "Notebook Basic 15"))
+                .addProperty(new Property(null, "Description", ValueType.PRIMITIVE,
+                    "Notebook Basic, 1.7GHz - 15 XGA - 1024MB DDR2 SDRAM - 40GB"));
             e1.setId(createId(1));
             productList.add(e1);
 
             final Entity e2 = new Entity()
-                    .addProperty(new Property(null, "ID", ValueType.PRIMITIVE, 2))
-                    .addProperty(new Property(null, "Name", ValueType.PRIMITIVE, "1UMTS PDA"))
-                    .addProperty(new Property(null, "Description", ValueType.PRIMITIVE,
-                            "Ultrafast 3G UMTS/HSDPA Pocket PC, supports GSM network"));
+                .addProperty(new Property(null, "ID", ValueType.PRIMITIVE, 2))
+                .addProperty(new Property(null, "Name", ValueType.PRIMITIVE, "1UMTS PDA"))
+                .addProperty(new Property(null, "Description", ValueType.PRIMITIVE,
+                    "Ultrafast 3G UMTS/HSDPA Pocket PC, supports GSM network"));
             e2.setId(createId(2));
             productList.add(e2);
 
             final Entity e3 = new Entity()
-                    .addProperty(new Property(null, "ID", ValueType.PRIMITIVE, 3))
-                    .addProperty(new Property(null, "Name", ValueType.PRIMITIVE, "Ergo Screen"))
-                    .addProperty(new Property(null, "Description", ValueType.PRIMITIVE,
-                            "19 Optimum Resolution 1024 x 768 @ 85Hz, resolution 1280 x 960"));
+                .addProperty(new Property(null, "ID", ValueType.PRIMITIVE, 3))
+                .addProperty(new Property(null, "Name", ValueType.PRIMITIVE, "Ergo Screen"))
+                .addProperty(new Property(null, "Description", ValueType.PRIMITIVE,
+                    "19 Optimum Resolution 1024 x 768 @ 85Hz, resolution 1280 x 960"));
             e3.setId(createId(3));
             productList.add(e3);
         }
