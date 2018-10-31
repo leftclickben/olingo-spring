@@ -28,10 +28,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class DemoEdmProvider implements CsdlEdmProvider {
-    static final String NAMESPACE = "OData.Demo";
-    static final FullQualifiedName CONTAINER_FQN = new FullQualifiedName(NAMESPACE, "Container");
-    static final FullQualifiedName PRODUCT_TYPE_FQN = new FullQualifiedName(NAMESPACE, "Product");
-    static final String PRODUCTS_SET_NAME = "Products";
+    public static final String NAMESPACE = "OData.Demo";
+    public static final FullQualifiedName CONTAINER_FQN = new FullQualifiedName(NAMESPACE, "Container");
+    public static final FullQualifiedName PRODUCT_TYPE_FQN = new FullQualifiedName(NAMESPACE, "Product");
+    public static final String PRODUCTS_SET_NAME = "Products";
 
     @Override
     public CsdlEntityType getEntityType(FullQualifiedName entityTypeName) {
@@ -39,20 +39,13 @@ public class DemoEdmProvider implements CsdlEdmProvider {
             return null;
         }
 
-        // create EntityType properties
-        CsdlProperty id = new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName());
-        CsdlProperty name = new CsdlProperty().setName("Name").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-        CsdlProperty description = new CsdlProperty().setName("Description").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName());
-
-        // create CsdlPropertyRef for Key element
-        CsdlPropertyRef propertyRef = new CsdlPropertyRef();
-        propertyRef.setName("ID");
-
-        // configure EntityType
         CsdlEntityType entityType = new CsdlEntityType();
         entityType.setName(PRODUCT_TYPE_FQN.getName());
-        entityType.setProperties(Arrays.asList(id, name, description));
-        entityType.setKey(Collections.singletonList(propertyRef));
+        entityType.setProperties(Arrays.asList(
+            new CsdlProperty().setName("ID").setType(EdmPrimitiveTypeKind.Int32.getFullQualifiedName()),
+            new CsdlProperty().setName("Name").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName()),
+            new CsdlProperty().setName("Description").setType(EdmPrimitiveTypeKind.String.getFullQualifiedName())));
+        entityType.setKey(Collections.singletonList(new CsdlPropertyRef().setName("ID")));
 
         return entityType;
     }

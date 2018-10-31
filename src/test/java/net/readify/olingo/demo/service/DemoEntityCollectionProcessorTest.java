@@ -1,5 +1,6 @@
 package net.readify.olingo.demo.service;
 
+import net.readify.olingo.demo.mocks.MockStorage;
 import org.apache.olingo.commons.api.edm.EdmEntitySet;
 import org.apache.olingo.commons.api.format.ContentType;
 import org.apache.olingo.server.api.*;
@@ -30,7 +31,7 @@ public class DemoEntityCollectionProcessorTest {
     public void instantiateProviderAndProcessor() {
         final OData odata = OData.newInstance();
         final ServiceMetadata metadata = odata.createServiceMetadata(new DemoEdmProvider(), new ArrayList<>());
-        processor = new DemoEntityCollectionProcessor();
+        processor = new DemoEntityCollectionProcessor(new MockStorage());
         processor.init(odata, metadata);
         productsSet = metadata.getEdm().getEntityContainer(DemoEdmProvider.CONTAINER_FQN).getEntitySet(DemoEdmProvider.PRODUCTS_SET_NAME);
     }

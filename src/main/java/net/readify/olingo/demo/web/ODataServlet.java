@@ -1,7 +1,9 @@
 package net.readify.olingo.demo.web;
 
+import net.readify.olingo.demo.data.InMemoryStorage;
 import net.readify.olingo.demo.service.DemoEdmProvider;
 import net.readify.olingo.demo.service.DemoEntityCollectionProcessor;
+import net.readify.olingo.demo.service.DemoEntityProcessor;
 import org.apache.olingo.server.api.OData;
 import org.apache.olingo.server.api.ODataHttpHandler;
 import org.apache.olingo.server.api.ServiceMetadata;
@@ -12,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 public class ODataServlet extends HttpServlet {
@@ -20,13 +23,19 @@ public class ODataServlet extends HttpServlet {
 
     protected void service(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException {
         try {
-            // create odata handler and configure it with provider and processor
+            HttpSession session = req.getSession(true);
+            InMemoryStorage storage = (InMemoryStorage) session.getAttribute(InMemoryStorage.class.getName());
+            if (storage == null) {
+                storage = new InMemoryStorage();
+                session.setAttribute(InMemoryStorage.class.getName(), storage);
+            }
+
             OData odata = OData.newInstance();
             ServiceMetadata edm = odata.createServiceMetadata(new DemoEdmProvider(), new ArrayList<>());
             ODataHttpHandler handler = odata.createHandler(edm);
-            handler.register(new DemoEntityCollectionProcessor());
+            handler.register(new DemoEntityCollectionProcessor(storage));
+            handler.register(new DemoEntityProcessor(storage));
 
-            // let the handler do the work
             handler.process(req, resp);
         } catch (RuntimeException e) {
             LOG.error("Server Error occurred in ODataServlet", e);
